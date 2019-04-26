@@ -1,0 +1,18 @@
+apiVersion: skaffold/v1beta8
+kind: Config
+build:
+  artifacts:
+  - image: registry.tcsbank.ru:5050/k8s/resolver_exporter
+  tagPolicy:
+      sha256: {}
+deploy:
+  helm:
+    releases:
+    - name: resolver-exporter
+      chartPath: helm/resolver-exporter
+      namespace: kube-system
+      skipBuildDependencies: true
+      wait: false
+      values:
+#        image.repository: registry.tcsbank.ru:5050/k8s/resolver_exporter
+        image: registry.tcsbank.ru:5050/k8s/resolver_exporter

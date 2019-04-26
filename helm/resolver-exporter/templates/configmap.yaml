@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ template "resolver-exporter.fullname" . }}
+  labels:
+    app: {{ template "resolver-exporter.name" . }}
+    chart: {{ template "resolver-exporter.chart" . }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+data:
+  site.yaml: |
+    {{- with .Values.config }}
+        site:
+{{ toYaml .site | indent 8 }}
+    {{- end }}
